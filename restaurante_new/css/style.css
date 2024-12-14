@@ -1,0 +1,205 @@
+@import url(./main.css);
+
+
+/* Remove the navbar's default rounded borders and increase the bottom margin */ 
+.navbar {
+    margin-bottom: 50px;
+    border-radius: 0;
+    background-color: #6A040F; /* Alterando a cor do navbar */
+  }
+  
+  /* Remove the jumbotron's default bottom margin */ 
+   .jumbotron {
+    margin-bottom: 0;
+    background-color: #9D0208; /* Alterando a cor do jumbotron */
+    color: white; /* Alterando a cor do texto no jumbotron */
+  }
+ 
+  /* Add a gray background color and some padding to the footer */
+  footer {
+    background-color: #F48C06; /* Alterando a cor do rodapé */
+    padding: 25px;
+    color: white; /* Alterando a cor do texto no rodapé */
+  }
+
+  /* Alterando a cor do texto nos links do navbar */
+  .navbar-inverse .navbar-nav>li>a {
+    color: white;
+  }
+  
+  /* Alterando a cor do texto nos links ativos do navbar */
+  .navbar-inverse .navbar-nav>.active>a,
+  .navbar-inverse .navbar-nav>.active>a:focus,
+  .navbar-inverse .navbar-nav>.active>a:hover {
+    color: #F48C06;
+    background-color: #6A040F;
+  }
+  
+  /* Alterando a cor dos ícones no navbar */
+  .navbar-inverse .navbar-nav>li>a>.glyphicon {
+    color: white;
+  }
+
+  /* Alterando a cor de fundo do body para preto */
+  body {
+    background-color: #F1F1F1;
+  }
+
+  /* Estilizando o formulário de contato */
+  .contact-form, .reservations form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .contact-form h3, .reservations .section-header h2 {
+    margin-bottom: 20px;
+    color: #9D0208;
+  }
+
+  .contact-form input, .contact-form textarea, .reservations form input, .reservations form textarea {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+
+  .contact-form input[type="submit"], .reservations form button[type="submit"] {
+    background-color: #9D0208;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
+  .contact-form input[type="submit"]:hover, .reservations form button[type="submit"]:hover {
+    background-color: #6A040F;
+  }
+
+  .contact-form .sent-message, .reservations .sent-message {
+    color: #28a745;
+    display: none;
+  }
+
+  .contact-form .error-message, .reservations .error-message {
+    color: #dc3545;
+    display: none;
+  }
+
+  .contact-form .loading, .reservations .loading {
+    color: #ffc107;
+    display: none;
+  }
+  /* Botão de voltar ao topo */
+  .back-to-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 40px;
+    height: 40px;
+    background: #9D0208;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    z-index: 99; /* Para garantir que o botão fique acima de outros elementos */
+  }
+
+  .back-to-top i {
+    font-size: 24px;
+    line-height: 40px;
+  }
+
+  /* Quando o botão de voltar ao topo está ativo */
+  .back-to-top.active {
+    display: block;
+  }
+  /* Botão flutuante do WhatsApp */
+  .whatsapp-floating {
+    position: fixed;
+    bottom: 40px;
+    left: 40px;
+    width: 60px;
+    height: 60px;
+    background: #25d366;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    z-index: 99; /* Para garantir que o botão fique acima de outros elementos */
+  }
+
+  /* Quando o botão flutuante do WhatsApp está ativo */
+  .whatsapp-floating:hover {
+    background: #128C7E;
+  }
+  /* Estilizando o ícone do WhatsApp */
+  .whatsapp-icon {
+    font-size: 32px;
+  }
+   /* Adicione as regras de mídia para tornar o layout responsivo */
+   @media (max-width: 768px) {
+    .navbar-nav {
+      margin-top: 15px; /* Aumenta a margem superior para os itens do navbar */
+    }
+
+    .jumbotron {
+      padding-top: 20px; /* Diminui o espaço superior no jumbotron */
+    }
+
+    .reservation-img {
+      height: 300px; /* Redimensiona a imagem de reserva na visualização móvel */
+    }
+
+    .reservation-form-bg {
+      padding: 30px; /* Adiciona espaço interno ao formulário de reserva */
+    }
+  }
+
+  @media (max-width: 992px) {
+    .about-img {
+      height: 300px; /* Redimensiona a imagem na seção sobre em telas menores */
+    }
+  }
+  /* Estilizando os títulos */
+  .section-header h2 {
+    margin-bottom: 30px;
+    font-size: 36px;
+    font-weight: 700;
+    color: #9D0208; /* Cor do título */
+    text-align: center; /* Alinhamento centralizado */
+  }
+  /* Estilizando o botão "Book a Table" */
+  .reservations form button[type="submit"] {
+    background-color: #9D0208;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px; /* Adicionando borda arredondada */
+  }
+
+  /* Alterando a cor de fundo do botão quando hover */
+  .reservations form button[type="submit"]:hover {
+    background-color: #6A040F;
+  }
+  /* Estilizando o botão "Add to Cart" */
+  .menu .panel-footer .btn {
+    background-color: #9D0208;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-transform: uppercase; /* Transforma o texto para maiúsculas */
+  }
+
+  .menu .panel-footer .btn:hover {
+    background-color: #6A040F;
+  }
+

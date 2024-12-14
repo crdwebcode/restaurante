@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart</title>
+  <!-- Inclusão da biblioteca Bootstrap -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
+
+  <style>
+    @media (min-width: 1025px) {
+        .h-custom {
+        height: 100vh !important;
+        }
+    }
+     /* Remove the navbar's default rounded borders and increase the bottom margin */ 
+     .navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+      background-color: #6A040F; /* Alterando a cor do navbar */
+    }
+    
+    /* Remove the jumbotron's default bottom margin */ 
+     .jumbotron {
+      margin-bottom: 0;
+      background-color: #9D0208; /* Alterando a cor do jumbotron */
+      color: white; /* Alterando a cor do texto no jumbotron */
+    }
+   
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #F48C06; /* Alterando a cor do rodapé */
+      padding: 25px;
+      color: white; /* Alterando a cor do texto no rodapé */
+    }
+
+    /* Alterando a cor do texto nos links do navbar */
+    .navbar-inverse .navbar-nav>li>a {
+      color: white;
+    }
+    
+    /* Alterando a cor do texto nos links ativos do navbar */
+    .navbar-inverse .navbar-nav>.active>a,
+    .navbar-inverse .navbar-nav>.active>a:focus,
+    .navbar-inverse .navbar-nav>.active>a:hover {
+      color: #F48C06;
+      background-color: #6A040F;
+    }
+    
+    /* Alterando a cor dos ícones no navbar */
+    .navbar-inverse .navbar-nav>li>a>.glyphicon {
+      color: white;
+    }
+
+    /* Alterando a cor de fundo do body para preto */
+    body {
+      background-color: #000;
+    }
+     /* Adicione as regras de mídia para tornar o layout responsivo */
+     @media (max-width: 768px) {
+      .navbar-nav {
+        margin-top: 15px; /* Aumenta a margem superior para os itens do navbar */
+      }
+
+      .jumbotron {
+        padding-top: 20px; /* Diminui o espaço superior no jumbotron */
+      }
+
+      .reservation-img {
+        height: 300px; /* Redimensiona a imagem de reserva na visualização móvel */
+      }
+
+      .reservation-form-bg {
+        padding: 30px; /* Adiciona espaço interno ao formulário de reserva */
+      }
+    }
+
+    @media (max-width: 992px) {
+      .about-img {
+        height: 300px; /* Redimensiona a imagem na seção sobre em telas menores */
+      }
+    }
+    </style>
+</head>
+<body>
+
+<div class="jumbotron">
+    <div class="container text-center">
+      <a href="index.html"><img src="./img/logo.png"></a>
+      
+    </div>
+  </div>
+  
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" href="index.html"><img src="./img/logo.ico" style="width: 50px;"></a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#reservations">Reservations</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Your Account</a></li>
+          <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+<section class="h-100 h-custom" style="background-color: #eee;">
+    <div class="section-header" align="center">
+        <h2>Carrinho de Compras</h2>
+        
+      </div>
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col">
+          <div class="card">
+            <div class="card-body p-4">
+  
+              <div class="row">
+  
+                <div class="col-lg-7">
+                  <h5 class="mb-3"><a href="#!" class="text-body"><i
+                        class="fas fa-long-arrow-alt-left me-2"></i>Continue Comprando</a></h5>
+                  <hr>
+  
+                  <div class="d-flex justify-content-between align-items-center mb-4">
+                    <!-- Cart items -->
+                    <div id="cart-items"></div>                    
+                    
+                    
+                  </div>                 
+                    
+  
+                </div>
+                <div class="col-lg-5">
+                  <p id="total-price" style="font-size: xx-large; color: #9D0208;"></p>
+                  <button onclick="iniciarPagamento()">Pagar com PagSeguro</button>
+                  <button id="sum-prices"><a href="index.html">Continuar Comprando</a></button>
+                  <button id="clear-cart">Limpar Carrinho</button>
+  
+                </div>
+  
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Obter a string JSON armazenada no localStorage
+    let carrinhoJSON = localStorage.getItem('carrinho');
+    let carrinho = [];
+  
+    // Verificar se a string JSON existe
+    if (carrinhoJSON) {
+      // Converter a string JSON de volta para um array de objetos JavaScript
+      carrinho = JSON.parse(carrinhoJSON);
+      exibirItensDoCarrinho();
+    } else {
+      // Se não houver itens no localStorage, exibir uma mensagem
+      exibirMensagemCarrinhoVazio();
+    }
+  
+    // Função para exibir os itens do carrinho
+    function exibirItensDoCarrinho() {
+      const cartItemsDiv = document.getElementById('cart-items');
+      cartItemsDiv.innerHTML = ''; // Limpar itens anteriores antes de adicionar os novos
+  
+      // Iterar sobre cada item no carrinho e criar elementos HTML para exibi-los
+      carrinho.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.innerHTML = `
+          <h2>${item.nome}</h2>
+          <p><strong>Descrição:</strong> ${item.descricao}</p>
+          <p><strong>Preço:</strong> ${item.preco}</p>
+          <img src="${item.imagem}" alt="${item.nome}" style="max-width: 200px;">
+        `;
+        cartItemsDiv.appendChild(itemDiv);
+      });
+  
+      // Atualizar o total dos preços
+      atualizarTotal();
+    }
+  
+    // Função para somar os preços dos itens no carrinho
+    function atualizarTotal() {
+      if (carrinho.length > 0) {
+        const total = carrinho.reduce((sum, item) => {
+          // Remover caracteres não numéricos do preço e converter para número
+          const precoNumerico = parseFloat(item.preco.replace(/[^\d.,-]/g, '').replace(',', '.'));
+          return sum + precoNumerico;
+        }, 0);
+        document.getElementById('total-price').innerText = `Total: R$ ${total.toFixed(2)}`;
+      } else {
+        document.getElementById('total-price').innerText = 'Carrinho vazio';
+      }
+    }
+  
+    // Função para limpar o carrinho
+    document.getElementById('clear-cart').addEventListener('click', () => {
+      // Limpar o carrinho e atualizar o localStorage e a exibição na página
+      carrinho = [];
+      localStorage.removeItem('carrinho');
+      exibirMensagemCarrinhoVazio();
+    });
+  
+    // Função para exibir uma mensagem de carrinho vazio
+    function exibirMensagemCarrinhoVazio() {
+      document.getElementById('cart-items').innerHTML = '<p>Nenhum item no carrinho.</p>';
+      document.getElementById('total-price').innerText = '';
+    }
+  </script>
+
+<script>
+  function iniciarPagamento() {
+    const carrinhoJSON = localStorage.getItem('carrinho');
+    if (!carrinhoJSON) {
+      alert('Seu carrinho está vazio!');
+      return;
+    }
+
+    const carrinho = JSON.parse(carrinhoJSON);
+    const itens = [];
+
+    carrinho.forEach((item, index) => {
+      itens.push({
+        id: index + 1,
+        description: item.nome,
+        amount: parseFloat(item.preco.replace(/[^\d.,-]/g, '').replace(',', '.')),
+        quantity: 1,
+        weight: 0
+      });
+    });
+
+    const data = {
+      email: 'carloscrdweb@gmail.com',
+      token: 'AB83E9F24DBD4255869020BC8EF5160E',
+      currency: 'BRL',
+      reference: 'REF1234', // Referência da transação, substitua conforme necessário
+      senderName: 'Nome do Comprador', // Nome do comprador, substitua conforme necessário
+      senderEmail: 'email@comprador.com', // Email do comprador, substitua conforme necessário
+      shippingAddressStreet: 'Rua Comprador', // Endereço de entrega do comprador, substitua conforme necessário
+      shippingAddressNumber: '123', // Número do endereço de entrega do comprador, substitua conforme necessário
+      shippingAddressDistrict: 'Bairro Comprador', // Bairro do endereço de entrega do comprador, substitua conforme necessário
+      shippingAddressPostalCode: '12345678', // CEP do endereço de entrega do comprador, substitua conforme necessário
+      shippingAddressCity: 'Cidade Comprador', // Cidade do endereço de entrega do comprador, substitua conforme necessário
+      shippingAddressState: 'Estado Comprador', // Estado do endereço de entrega do comprador, substitua conforme necessário
+      shippingAddressCountry: 'BRA', // País do endereço de entrega do comprador (código ISO 3166-1 alpha-3)
+      redirectURL: 'URL_DE_RETORNO', // URL para redirecionar após o pagamento, substitua conforme necessário
+      notificationURL: 'URL_DE_NOTIFICACAO' // URL para receber notificações do PagSeguro, substitua conforme necessário
+    };
+
+    // Adicionar itens ao objeto de dados
+    itens.forEach((item, index) => {
+      const prefix = `item[${index}]`;
+      data[`${prefix}.id`] = item.id;
+      data[`${prefix}.description`] = item.description;
+      data[`${prefix}.amount`] = item.amount.toFixed(2); // Preço formatado com duas casas decimais
+      data[`${prefix}.quantity`] = item.quantity;
+    });
+
+    // Criar um formulário oculto e enviar para o PagSeguro
+    const form = document.createElement('form');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', 'https://pagseguro.uol.com.br/v2/checkout/payment.html');
+    form.setAttribute('target', '_blank'); // Abrir em uma nova aba
+    Object.keys(data).forEach(key => {
+      const input = document.createElement('input');
+      input.setAttribute('type', 'hidden');
+      input.setAttribute('name', key);
+      input.setAttribute('value', data[key]);
+      form.appendChild(input);
+    });
+    document.body.appendChild(form);
+    form.submit();
+  }
+</script>
+
+
+
+  
+  
+
+</body>
+</html>
